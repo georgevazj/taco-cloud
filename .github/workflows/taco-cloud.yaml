@@ -115,20 +115,23 @@ jobs:
           password: ${{ env.IMAGE_REGISTRY_PASSWORD }}
           tls-verify: true
 
-  # update-manifests:
-  #   name: Update manifests
-  #   needs: "build-docker-and-push"
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-  #     - name: Update manifests with kustomize
-  #       working-directory: "manifests"
-  #       run: |
-  #         kustomize edit set image app-image=${{ env.IMAGE_REGISTRY }}/${{ env.APP_NAME }}@${{ needs.build-docker-and-push.outputs.digest }}
-  #         kustomize build .
-  #     - name: Commit and push changes
-  #       uses: devops-infra/action-commit-push@v0.3
-  #       with:
-  #         github_token: ${{ secrets.GITHUB_TOKEN }}
-  #         commit_message: Update deployment image tag to ${{ needs.build-and-push.outputs.digest }}
+  update-manifests:
+    name: Update manifests
+    needs: "build-docker-and-push"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ env.IMAGE_REGISTRY_USER }}/${{ env.APP_NAME }}-config
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Update manifests with kustomize
+        working-directory: "base"
+        run: |
+          kustomize edit set image app-image=${{ env.IMAGE_REGISTRY }}/${{ env.APP_NAME }}@${{ needs.build-docker-and-push.outputs.digest }}
+          kustomize build .
+      - name: Commit and push changes
+        uses: devops-infra/action-commit-push@v0.3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          commit_message: Update deployment image tag to ${{ needs.build-and-push.outputs.digest }}
