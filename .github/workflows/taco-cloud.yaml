@@ -137,8 +137,8 @@ jobs:
       #     commit_message: Update deployment image tag to ${{ needs.build-and-push.outputs.digest }}
       - name: Commit and push changes
         run: |
-          git config --global user.email "georgevazj@gmail.com"
-          git config --global user.name "Jorge Vazquez"
+          git config --local user.email "georgevazj@gmail.com"
+          git config --local user.name "Jorge Vazquez"
           git add -A
           git commit -m "Update deployment image tag to ${{ needs.build-and-push.outputs.digest }}"
           git push origin main
