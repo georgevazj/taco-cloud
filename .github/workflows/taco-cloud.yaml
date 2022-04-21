@@ -136,12 +136,9 @@ jobs:
       #     github_token: ${{ secrets.GITHUB_TOKEN }}
       #     commit_message: Update deployment image tag to ${{ needs.build-and-push.outputs.digest }}
       - name: Commit and push changes
-        uses: cpina/github-action-push-to-another-repository@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-        with:
-          source-directory: 'base'
-          destination-github-username: georgevazj
-          destination-repository-name: 'taco-cloud-config'
-          user-email: georgevazj@gmail.com
-          target-branch: main
+        run: |
+          git config --global user.email "georgevazj@gmail.com"
+          git config --global user.name "Jorge Vazquez"
+          git add -A
+          git commit -m "Update deployment image tag to ${{ needs.build-and-push.outputs.digest }}"
+          git push origin main
