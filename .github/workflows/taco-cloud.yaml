@@ -130,8 +130,8 @@ jobs:
         run: |
           kustomize edit set image app-image=${{ env.IMAGE_REGISTRY }}/${{ env.APP_NAME }}@${{ needs.build-docker-and-push.outputs.digest }}
           kustomize build .
-      # - name: Commit and push changes
-      #   uses: devops-infra/action-commit-push@v0.3
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     commit_message: Update deployment image tag to ${{ needs.build-and-push.outputs.digest }}
+      - name: Commit and push changes
+        uses: devops-infra/action-commit-push@v0.3
+        with:
+          # github_token: ${{ secrets.GITHUB_TOKEN }}
+          commit_message: Update deployment image tag to ${{ needs.build-and-push.outputs.digest }}
