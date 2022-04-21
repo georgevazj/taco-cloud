@@ -126,11 +126,11 @@ jobs:
       - name: Check paths
         run: |
           ls -lha
-      # - name: Update manifests with kustomize
-      #   working-directory: "manifests"
-      #   run: |
-      #     kustomize edit set image app-image=${{ env.IMAGE_REGISTRY }}/${{ env.APP_NAME }}@${{ needs.build-docker-and-push.outputs.digest }}
-      #     kustomize build .
+      - name: Update manifests with kustomize
+        working-directory: "base"
+        run: |
+          kustomize edit set image app-image=${{ env.IMAGE_REGISTRY }}/${{ env.APP_NAME }}@${{ needs.build-docker-and-push.outputs.digest }}
+          kustomize build .
       # - name: Commit and push changes
       #   uses: devops-infra/action-commit-push@v0.3
       #   with:
