@@ -142,7 +142,8 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source-directory: '.'
+          source-directory: 'base'
+          target-directory: 'base'
           destination-github-username: 'georgevazj'
           destination-repository-name: 'taco-cloud-config'
           user-email: georgevazj@gmail.com
