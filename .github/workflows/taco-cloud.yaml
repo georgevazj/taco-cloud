@@ -144,6 +144,6 @@ jobs:
         with:
           source-directory: 'base'
           destination-github-username: 'georgevazj'
-          destination-repository-name: 'georgevazj/taco-cloud-config'
+          destination-repository-name: 'taco-cloud-config'
           user-email: georgevazj@gmail.com
           target-branch: main
