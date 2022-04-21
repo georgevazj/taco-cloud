@@ -132,9 +132,8 @@ jobs:
           kustomize build .
       - name: Commit and push changes
         uses: devops-infra/action-commit-push@v0.9.0
-        env:
-          github_token: ${{ secrets.CONFIG_PAT }}
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           target_branch: main
           add_timestamp: true
           commit_prefix: "[AUTO]"
