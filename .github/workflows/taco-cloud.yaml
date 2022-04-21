@@ -130,8 +130,19 @@ jobs:
         run: |
           kustomize edit set image app-image=${{ env.IMAGE_REGISTRY }}/${{ env.APP_NAME }}@${{ needs.build-docker-and-push.outputs.digest }}
           kustomize build .
+      # - name: Commit and push changes
+      #   uses: devops-infra/action-commit-push@v0.3
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     commit_message: Update deployment image tag to ${{ needs.build-and-push.outputs.digest }}
       - name: Commit and push changes
-        uses: devops-infra/action-commit-push@v0.3
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          source-directory: 'base'
+          destination-github-username: ${{ secrets.IMAGE_REGISTRY_USER }}
+          destination-repository-name: 'taco-cloud-config'
+          user-email: georgevazj@gmail.com
+          target-branch: main
           commit_message: Update deployment image tag to ${{ needs.build-and-push.outputs.digest }}
