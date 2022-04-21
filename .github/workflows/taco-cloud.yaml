@@ -141,8 +141,7 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
           source-directory: 'base'
-          destination-github-username: ${{ secrets.IMAGE_REGISTRY_USER }}
+          destination-github-username: georgevazj
           destination-repository-name: 'taco-cloud-config'
           user-email: georgevazj@gmail.com
           target-branch: main
-          commit_message: Update deployment image tag to ${{ needs.build-and-push.outputs.digest }}
